@@ -1,0 +1,40 @@
+.sidebar {
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(0);
+    position: relative;
+  }
+  
+  .sidebar-closed {
+    transform: translateX(-100%);
+  }
+  
+  .sidebar-open {
+    transform: translateX(0);
+  }
+  
+  .toggle-button {
+    position: absolute;
+    top: 50%;
+    right: -40px; /* Button stays visible when menu is closed */
+    transform: translateY(-50%);
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .toggle-button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .sidebar-closed .toggle-button {
+    right: -40px;
+  }
+  
+  .sidebar-open .toggle-button {
+    right: -40px;
+  }
+  
