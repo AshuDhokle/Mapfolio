@@ -1,5 +1,9 @@
 import { UserProfile } from "../Database/ProfileSchema.js";
+import path from 'path';
+import { fileURLToPath } from 'url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 // Fetches all Users
 export const getAllUsers = async (req, res) => {
   try {
@@ -14,21 +18,22 @@ export const getAllUsers = async (req, res) => {
 // Adds a new user
 export const AddUser = async (req, res) => {
   try {
-    const { name, image, location, description } = req.body;
-
+    const { name, location, description } = req.body;
+    const {path,filename} = req.file
     const newUser = new UserProfile({
       name,
-      image,
       location,
       description,
+      image:{path,filename},
     });
 
     await newUser.save();
     res.status(201).json({ message: "User added successfully", user: newUser });
+    
   } catch (error) {
     console.error("Something went wrong", error);
     res.status(500).json({ message: "Failed to add user" });
-  }
+   }
 };
 
 //Updates the existing User
@@ -70,5 +75,19 @@ export const deleteUser = async (req, res) => {
   } catch (error) {
     console.error("Something went wrong", error);
     res.status(500).json({ message: "Failed to delete user" });
+  }
+};
+
+
+export const getImage = async (req, res) => {
+  try {
+    const image = req.body;
+    
+    const imagePath = path.join(__dirname,"uploads",image.filename)
+    
+    res.status(200).sendFile(imagePath);
+  } catch (error) {
+    console.error("Something went wrong", error);
+    res.status(500).json({ message: "Failed to fetch users" });
   }
 };
